@@ -8,7 +8,7 @@ const { t } = useI18n()
 <template>
   <!-- ✅ añade class="hero" para heredar el tema y el contraste -->
   <section
-    class="hero animate-in-up"
+    class="hero animate-in fade-in slide-in-from-bottom-4"
   >
     <div class="mx-auto grid max-w-6xl gap-10 lg:grid-cols-2">
       <div class="flex flex-col justify-center">
@@ -39,7 +39,7 @@ const { t } = useI18n()
 
       <div class="relative">
         <img
-          class="aspect-[4/3] w-full rounded-2xl object-cover shadow-md ring-1 ring-black/5 dark:ring-white/10 animate-pulse-soft"
+          class="aspect-[4/3] w-full rounded-2xl object-cover shadow-md ring-1 ring-black/5 dark:ring-white/10 animate-pulse duration-[1.6s]"
           src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=1200&auto=format&fit=crop"
           alt="Machu Picchu" loading="lazy"
         />
