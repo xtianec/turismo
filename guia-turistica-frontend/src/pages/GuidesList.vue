@@ -45,10 +45,10 @@ onMounted(() => setTimeout(() => (loading.value = false), 400))
   </div>
 
   <div v-if="loading" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-    <div v-for="i in 6" :key="i" class="card h-28 animate-pulse-soft"></div>
+    <div v-for="i in 6" :key="i" class="card h-28 animate-pulse duration-[1.6s]"></div>
   </div>
 
-  <div v-else class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 animate-fade">
+  <div v-else class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 animate-in fade-in">
     <GuideCard v-for="g in list" :key="g.name" v-bind="g" />
   </div>
 </template>

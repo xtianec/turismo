@@ -1,4 +1,5 @@
-import axios, { AxiosError, AxiosRequestConfig } from 'axios';
+import axios, { AxiosError } from 'axios';
+import type { AxiosRequestConfig } from 'axios';
 
 // Ensure baseURL always matches backend origin and has no trailing slash
 const baseURL = (import.meta.env.VITE_API_URL ?? 'http://localhost:3000').replace(/\/$/, '');

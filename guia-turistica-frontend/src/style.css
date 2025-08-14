@@ -285,17 +285,6 @@ body {
    ========================================= */
 .prose img, .card img, .content img { border-radius: .75rem; }
 
-/* =========================================
-   Animaciones sutiles
-   ========================================= */
-@keyframes in-fade    { from { opacity: 0 } to { opacity: 1 } }
-@keyframes in-up      { from { opacity: 0; transform: translateY(8px) } to { opacity: 1; transform: none } }
-@keyframes pulse-soft { 0%,100% { transform: scale(1) } 50% { transform: scale(1.02) } }
-
-.animate-fade       { animation: in-fade .35s ease-out both; }
-.animate-in-up      { animation: in-up   .45s ease-out both; }
-.animate-pulse-soft { animation: pulse-soft 1.6s ease-in-out infinite; }
-
 /* ===== Fix de contraste en HERO y FOOTER (añadir al FINAL de style.css) ===== */
 
 /* Headings dentro del hero: contraste explícito */
