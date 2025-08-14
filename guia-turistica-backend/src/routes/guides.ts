@@ -5,18 +5,26 @@ import type { Prisma } from '@prisma/client';
 
 const router = Router();
 
-// GET /guides?city=...&lang=ES
+// GET /guides?q=...&lang=ES
 router.get('/', async (req, res) => {
-  const city = typeof req.query.city === 'string' ? req.query.city : undefined;
+  const q = typeof req.query.q === 'string' ? req.query.q : undefined;
   const lang = typeof req.query.lang === 'string' ? req.query.lang.toUpperCase() : undefined;
 
-  const where: Prisma.GuideProfileWhereInput = {};
-  if (city) {
-    where.city = { name: { contains: city, mode: 'insensitive' } };
+  const filters: Prisma.GuideProfileWhereInput[] = [];
+  if (q) {
+    filters.push({
+      OR: [
+        { user: { name: { contains: q, mode: 'insensitive' } } },
+        { city: { name: { contains: q, mode: 'insensitive' } } }
+      ]
+    });
   }
   if (lang) {
-    where.languages = { some: { languageCode: lang } };
+    filters.push({ languages: { some: { languageCode: lang } } });
   }
+
+  const where: Prisma.GuideProfileWhereInput =
+    filters.length > 0 ? { AND: filters } : {};
 
   const guides = await prisma.guideProfile.findMany({
     where,

@@ -1,5 +1,5 @@
 import prisma from '../src/prisma';
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcrypt';
 
 async function main() {
   // catálogos mínimos
