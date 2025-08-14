@@ -1,34 +1,44 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import GuideCard from '@/components/GuideCard.vue'
+import { fetchGuides, type GuideCard as Guide } from '@/services/guides'
 
 const { t } = useI18n()
 const q = ref('')
 const lang = ref<'all' | 'ES' | 'EN' | 'PT' | 'FR'>('all')
 const loading = ref(true)
+const guides = ref<Guide[]>([])
 
-const data = ref([
-  { name: 'María López',   city: 'Cusco',    price: 180, rating: 4.9, languages: ['ES','EN'], avatar: '' },
-  { name: 'Jorge Paredes', city: 'Arequipa', price: 160, rating: 4.7, languages: ['ES'],     avatar: '' },
-  { name: 'Ana Souza',     city: 'Lima',     price: 200, rating: 4.8, languages: ['ES','EN','PT'], avatar: '' },
-])
+async function load() {
+  loading.value = true
+  try {
+    guides.value = await fetchGuides(
+      {
+        q: q.value.trim() || undefined,
+        lang: lang.value === 'all' ? undefined : lang.value,
+      },
+      true,
+    )
+  } finally {
+    loading.value = false
+  }
+}
 
-const list = computed(() =>
-  data.value.filter(g =>
-    (lang.value === 'all' || g.languages.includes(lang.value)) &&
-    (q.value.trim() === '' || [g.name, g.city].join(' ').toLowerCase().includes(q.value.toLowerCase()))
-  )
-)
+let timer: number
+watch([q, lang], () => {
+  clearTimeout(timer)
+  timer = window.setTimeout(load, 300)
+})
 
-onMounted(() => setTimeout(() => (loading.value = false), 400))
+onMounted(load)
 </script>
 
 <template>
   <div class="mb-2 flex items-center justify-between">
     <h1 class="text-2xl font-bold">{{ $t('nav.guides') }}</h1>
     <p class="text-sm text-ink-600 dark:text-ink-300">
-      {{ $t('guide.results', { n: list.length }) }}
+      {{ $t('guide.results', { n: guides.length }) }}
     </p>
   </div>
 
@@ -49,6 +59,14 @@ onMounted(() => setTimeout(() => (loading.value = false), 400))
   </div>
 
   <div v-else class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 animate-in fade-in">
-    <GuideCard v-for="g in list" :key="g.name" v-bind="g" />
+    <GuideCard
+      v-for="g in guides"
+      :key="g.id"
+      :name="g.name"
+      :city="g.city || ''"
+      :price="g.pricePerDay || 0"
+      :rating="0"
+      :languages="g.languages"
+    />
   </div>
 </template>
