@@ -1,0 +1,330 @@
+/* src/style.css */
+@import "tailwindcss";
+
+/* =========================================
+   Design tokens (Tailwind v4)
+   ========================================= */
+@theme {
+  /* Brand */
+  --color-brand-50:  #f3f7ff;
+  --color-brand-100: #e6efff;
+  --color-brand-200: #caddff;
+  --color-brand-300: #9fc2ff;
+  --color-brand-400: #6ba8ff;
+  --color-brand-500: #3b82f6; /* principal */
+  --color-brand-600: #2969d9;
+  --color-brand-700: #1f4fab;
+  --color-brand-800: #1c3f8c;
+  --color-brand-900: #152f66;
+
+  /* Ink / Neutrales */
+  --color-ink-50:  #f8fafc;
+  --color-ink-100: #f1f5f9;
+  --color-ink-200: #e2e8f0;
+  --color-ink-300: #cbd5e1;
+  --color-ink-400: #94a3b8;
+  --color-ink-500: #64748b;
+  --color-ink-600: #475569;
+  --color-ink-700: #334155;
+  --color-ink-800: #1e293b;
+  --color-ink-900: #0b1220;
+
+  /* Superficies coherentes */
+  --color-surface-1-light: #ffffff; /* body */
+  --color-surface-2-light: #f8fafc; /* bloques/card */
+  --color-surface-1-dark:  #0b1220; /* body */
+  --color-surface-2-dark:  #0f172a; /* bloques/card */
+
+  /* Miscelánea */
+  --radius-card: 1rem;
+  --shadow-card: 0 1px 2px rgb(0 0 0 / .05), 0 16px 32px -16px rgb(0 0 0 / .25);
+}
+
+/* =========================================
+   Base / Layout
+   ========================================= */
+:root { color-scheme: light dark; }
+html, body, #app { height: 100%; }
+img, svg, video { max-width: 100%; height: auto; }
+
+body {
+  background: var(--color-surface-1-light);
+  color: var(--color-ink-800);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.dark body {
+  background: var(--color-surface-1-dark);
+  color: var(--color-ink-100);
+}
+
+/* Shell para footer pegado al fondo */
+.app-shell { display: flex; min-height: 100vh; flex-direction: column; }
+.app-main  { flex: 1 1 auto; }
+
+/* Contenedor */
+.container-app { max-width: 80rem; margin-inline: auto; padding-inline: 1rem; }
+@media (min-width: 640px){ .container-app { padding-inline: 1.5rem; } }
+@media (min-width:1024px){ .container-app { padding-inline: 2rem; } }
+
+/* Tipografía secundaria */
+.subtle { font-size: .875rem; color: var(--color-ink-500); }
+.dark .subtle { color: var(--color-ink-300); }
+
+/* =========================================
+   Superficies y tarjetas
+   ========================================= */
+.surface { background: var(--color-surface-2-light); }
+.dark .surface { background: var(--color-surface-2-dark); }
+
+.surface-glass {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / .05);
+  background: color-mix(in oklab, white 60%, transparent);
+}
+.dark .surface-glass {
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / .10);
+  background: color-mix(in oklab, black 60%, transparent);
+}
+
+/* Card con color de texto heredado legible en ambos temas */
+.card {
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: 1.25rem;
+  background: var(--color-surface-2-light);
+  outline: 1px solid rgb(0 0 0 / .05);
+  color: var(--color-ink-800);
+}
+.dark .card {
+  background: var(--color-surface-2-dark);
+  outline-color: rgb(255 255 255 / .10);
+  color: var(--color-ink-100);
+}
+
+.card-hover { transition: transform .3s ease; will-change: transform; }
+.card-hover:hover { transform: translateY(-2px); }
+
+/* =========================================
+   Links / Chips / Badges
+   ========================================= */
+.link {
+  color: var(--color-brand-700);
+  text-underline-offset: 4px;
+  transition: color .2s ease;
+}
+.link:hover { color: var(--color-brand-900); text-decoration: underline; }
+.dark .link { color: #a3c5ff; }
+.dark .link:hover { color: #ffffff; }
+
+.badge{
+  display:inline-grid; place-items:center;
+  padding:.25rem .625rem; border-radius:.75rem;
+  font-size:.875rem; font-weight:600;
+  background: var(--color-brand-50); color: var(--color-brand-700);
+}
+.dark .badge{ background: rgb(59 130 246 / .12); color:#d6e4ff; }
+
+.chip{
+  padding:.25rem .75rem; border-radius:9999px;
+  font-size:.875rem; background: rgb(0 0 0 / .05);
+}
+.dark .chip{ background: rgb(255 255 255 / .10); }
+
+/* =========================================
+   Botones accesibles
+   ========================================= */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
+  border-radius:.75rem; padding:.5rem 1rem; font-size:.875rem; font-weight:700;
+  outline: none; transition: background-color .2s ease, color .2s ease, border-color .2s ease, box-shadow .2s ease;
+  box-shadow: 0 1px 1px rgb(0 0 0 / .04);
+  border:1px solid rgb(0 0 0 / .05);
+}
+.dark .btn{ border-color: rgb(255 255 255 / .10); }
+.btn:disabled{ opacity:.5; pointer-events:none; }
+
+.btn-primary{
+  background: var(--color-brand-600); color:#fff; border-color: transparent;
+}
+.btn-primary:hover{ background: var(--color-brand-700); }
+.btn-primary:active{ background: var(--color-brand-800); }
+
+.btn-secondary{
+  background: var(--color-brand-50); color: var(--color-brand-700); border-color: transparent;
+}
+.btn-secondary:hover{ background: var(--color-brand-100); }
+.btn-secondary:active{ background: var(--color-brand-200); }
+.dark .btn-secondary{ background: rgb(255 255 255 / .14); color:#fff; }
+.dark .btn-secondary:hover{ background: rgb(255 255 255 / .20); }
+
+.btn-outline{
+  background:#fff; color: var(--color-ink-900);
+}
+.btn-outline:hover{ background: rgb(0 0 0 / .05); }
+.dark .btn-outline{
+  background: transparent; color: var(--color-ink-50); border-color: rgb(255 255 255 / .20);
+}
+.dark .btn-outline:hover{ background: rgb(255 255 255 / .10); }
+
+.btn-ghost{
+  background: transparent; color: var(--color-ink-700);
+}
+.btn-ghost:hover{ background: rgb(0 0 0 / .05); }
+.dark .btn-ghost{ color: var(--color-ink-100); }
+.dark .btn-ghost:hover{ background: rgb(255 255 255 / .12); }
+
+.btn-icon{ width: 2.25rem; height: 2.25rem; padding:0; display:grid; place-items:center; border-radius:.5rem; }
+
+/* =========================================
+   Formularios
+   ========================================= */
+.label{ margin-bottom:.25rem; display:block; font-size:.875rem; color: var(--color-ink-600); }
+.dark .label{ color: var(--color-ink-300); }
+
+.input{
+  width:100%; border-radius:.75rem; background:#fff; color: var(--color-ink-900);
+  padding:.5rem .75rem; font-size:.875rem; outline:none; box-shadow: 0 1px 1px rgb(0 0 0 / .04);
+  border:1px solid rgb(203 213 225); /* slate-300 */
+}
+.input:focus{ border-color: var(--color-brand-500); box-shadow: 0 0 0 4px rgb(59 130 246 / .25); }
+.dark .input{
+  background: var(--color-surface-2-dark); color: var(--color-ink-50);
+  border-color: rgb(255 255 255 / .14);
+}
+.dark .input::placeholder{ color: var(--color-ink-400); }
+
+.select{
+  border-radius:.75rem; background:#fff; color: var(--color-ink-900);
+  padding:.5rem .75rem; font-size:.875rem; border:1px solid rgb(203 213 225);
+  outline:none;
+}
+.select:focus{ border-color: var(--color-brand-500); box-shadow: 0 0 0 4px rgb(59 130 246 / .25); }
+
+/* Forzamos el menú nativo del <select> a ser claro en dark para evitar textos invisibles */
+.dark .select { color-scheme: light; background:#fff; color:#0f172a; border-color: rgb(255 255 255 / .20); }
+
+/* =========================================
+   Navbar
+   ========================================= */
+.navbar{
+  position: sticky; top:0; z-index:50;
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / .05);
+  background: color-mix(in oklab, white 82%, transparent);
+}
+.dark .navbar{
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / .12);
+  background: color-mix(in oklab, black 66%, transparent);
+}
+
+/* =========================================
+   Hero (con color heredado alta legibilidad)
+   ========================================= */
+.hero{
+  border-radius: 1rem; padding: 2rem;
+  box-shadow: 0 1px 1px rgb(0 0 0 / .04);
+  outline: 1px solid rgb(0 0 0 / .05);
+  background: linear-gradient(135deg, var(--color-brand-50), #ffffff);
+  /* 🔑 color base para TODO lo interno (títulos, párrafos, etc.) */
+  color: #0f172a; /* slate-900 aprox */
+}
+.dark .hero{
+  outline-color: rgb(255 255 255 / .12);
+  background: linear-gradient(135deg, #0f172a 0%, #0b1220 100%);
+  color: #f8fafc; /* texto muy claro por defecto */
+}
+
+/* Ajustes finos dentro del hero en ambos temas */
+.hero p     { color: color-mix(in oklab, currentColor 75%, transparent); }
+.dark .hero p { color: #cbd5e1; } /* slate-300 */
+.hero small,
+.hero dt    { color: color-mix(in oklab, currentColor 60%, transparent); }
+.dark .hero small,
+.dark .hero dt { color: #94a3b8; } /* slate-400 */
+
+/* =========================================
+   Navlinks
+   ========================================= */
+.navlink{
+  border-radius:.5rem; padding:.5rem .75rem; font-size:.875rem; font-weight:600;
+  color: var(--color-ink-700);
+}
+.navlink:hover{ background: rgb(0 0 0 / .05); color: var(--color-ink-900); }
+.dark .navlink{ color: var(--color-ink-100); }
+.dark .navlink:hover{ background: rgb(255 255 255 / .12); }
+.navlink--active{
+  background: rgb(0 0 0 / .06); color: var(--color-ink-900);
+}
+.dark .navlink--active{
+  background: rgb(255 255 255 / .18); color:#ffffff;
+}
+
+/* =========================================
+   Footer
+   ========================================= */
+.footer{
+  margin-top: 3rem; padding-block: 2.5rem; font-size: .875rem;
+  border-top: 1px solid rgb(0 0 0 / .06);
+  color: var(--color-ink-600);
+  background: color-mix(in oklab, white 3%, transparent);
+}
+.dark .footer{
+  border-top-color: rgb(255 255 255 / .12);
+  color: #cbd5e1; /* slate-300 */
+  background: color-mix(in oklab, black 8%, transparent);
+}
+.footer .title,
+.footer .brand { color: var(--color-ink-900); }
+.dark .footer .title,
+.dark .footer .brand { color: #ffffff; }
+
+/* =========================================
+   Imágenes en contenido
+   ========================================= */
+.prose img, .card img, .content img { border-radius: .75rem; }
+
+/* =========================================
+   Animaciones sutiles
+   ========================================= */
+@keyframes in-fade    { from { opacity: 0 } to { opacity: 1 } }
+@keyframes in-up      { from { opacity: 0; transform: translateY(8px) } to { opacity: 1; transform: none } }
+@keyframes pulse-soft { 0%,100% { transform: scale(1) } 50% { transform: scale(1.02) } }
+
+.animate-fade       { animation: in-fade .35s ease-out both; }
+.animate-in-up      { animation: in-up   .45s ease-out both; }
+.animate-pulse-soft { animation: pulse-soft 1.6s ease-in-out infinite; }
+
+/* ===== Fix de contraste en HERO y FOOTER (añadir al FINAL de style.css) ===== */
+
+/* Headings dentro del hero: contraste explícito */
+.hero :is(h1, h2, h3) { color: #0f172a; }           /* light */
+.dark .hero :is(h1, h2, h3) { color: #ffffff; }     /* dark */
+
+/* Stats/valores (dd) también claros en dark */
+.hero dd { color: #0f172a; }
+.dark .hero dd { color: #ffffff; }
+
+/* Texto secundario del hero en oscuro: legible pero no apagado */
+.dark .hero p,
+.dark .hero dt,
+.dark .hero small { color: #cbd5e1; } /* slate-300 */
+
+/* Footer: base y enlaces con buen contraste en ambos temas */
+.footer { color: #475569; }             /* slate-700 en claro */
+.dark .footer { color: #cbd5e1; }       /* slate-300 en oscuro */
+
+.footer .title,
+.footer .brand { color: #0f172a; }      /* títulos/brand claros en light */
+.dark .footer .title,
+.dark .footer .brand { color: #ffffff; }/* títulos/brand blancos en dark */
+
+.footer a { color: #1f4fab; }           /* brand-700 */
+.footer a:hover { color: #6ba8ff; text-decoration: underline; }
+
+.dark .footer a { color: #a3c5ff; }     /* enlaces legibles en dark */
+.dark .footer a:hover { color: #ffffff; text-decoration: underline; }
+
+/* Select del switcher: asegurar legibilidad del popup nativo en dark */
+.dark .select { color-scheme: light; background:#fff; color:#0f172a; }

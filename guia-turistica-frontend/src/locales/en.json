@@ -1,0 +1,20 @@
+{
+  "app": { "title": "Peru Tour Guides" },
+  "nav": { "home": "Home", "guides": "Guides", "login": "Login", "register": "Register" },
+  "home": {
+    "kicker": "YOUR TRIP, YOUR LANGUAGE",
+    "headline": "Find certified guides for your next trip to Peru",
+    "desc": "Filter by city, language and expertise. Contact safely, with no middlemen.",
+    "ctaSearch": "Search guides",
+    "ctaImGuide": "I'm a guide",
+    "stats": { "active": "Active guides", "regions": "Regions", "support": "Support" }
+  },
+  "guide": {
+    "filters": { "search": "Search by city or guide…", "allLanguages": "All languages" },
+    "results": "{n} results",
+    "years": "0 years | 1 year | {n} years"
+  },
+  "auth": { "email": "Email", "password": "Password", "signIn": "Sign in", "signUp": "Create account" },
+  "common": { "site": "Site", "legal": "Legal", "terms": "Terms", "privacy": "Privacy", "filters": "Filters" },
+  "footer": { "brand": "Connect tourists with certified guides across Peru.", "copyright": "© 2025 GuíaTurística." }
+}

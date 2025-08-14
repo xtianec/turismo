@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+
+    <!-- Pre-decidir dark/light para evitar FOUC -->
+    <script>
+      (() => {
+        try {
+          const ls = localStorage.getItem('theme'); // 'light' | 'dark' | 'system' | null
+          const sys = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          const isDark = ls === 'dark' || (!ls || ls === 'system') && sys;
+          if (isDark) document.documentElement.classList.add('dark');
+          const meta = document.createElement('meta');
+          meta.name = 'theme-color';
+          meta.content = isDark ? '#0b1220' : '#ffffff';
+          document.head.appendChild(meta);
+        } catch {}
+      })();
+    </script>
+
+    <title>GuíaTurística</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

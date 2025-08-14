@@ -1,0 +1,20 @@
+{
+  "app": { "title": "Guías de Turismo Perú" },
+  "nav": { "home": "Inicio", "guides": "Guías", "login": "Ingresar", "register": "Registrarse" },
+  "home": {
+    "kicker": "TU VIAJE, EN TU IDIOMA",
+    "headline": "Encuentra guías certificados para tu próximo viaje por Perú",
+    "desc": "Filtra por ciudad, idioma y especialidad. Contacta seguro y sin intermediarios.",
+    "ctaSearch": "Buscar guías",
+    "ctaImGuide": "Soy guía",
+    "stats": { "active": "Guías activos", "regions": "Regiones", "support": "Soporte" }
+  },
+  "guide": {
+    "filters": { "search": "Buscar por ciudad o guía…", "allLanguages": "Todos los idiomas" },
+    "results": "{n} resultados",
+    "years": "0 años | 1 año | {n} años"
+  },
+  "auth": { "email": "Correo", "password": "Contraseña", "signIn": "Iniciar sesión", "signUp": "Crear cuenta" },
+  "common": { "site": "Sitio", "legal": "Legal", "terms": "Términos", "privacy": "Privacidad", "filters": "Filtros" },
+  "footer": { "brand": "Conecta turistas con guías certificados en todo el Perú.", "copyright": "© 2025 GuíaTurística." }
+}

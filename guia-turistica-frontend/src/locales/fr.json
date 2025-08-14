@@ -1,0 +1,20 @@
+{
+  "app": { "title": "Guides Touristiques Pérou" },
+  "nav": { "home": "Accueil", "guides": "Guides", "login": "Se connecter", "register": "S'inscrire" },
+  "home": {
+    "kicker": "VOTRE VOYAGE, DANS VOTRE LANGUE",
+    "headline": "Trouvez des guides certifiés pour votre prochain voyage au Pérou",
+    "desc": "Filtrez par ville, langue et spécialité. Contactez en toute sécurité et sans intermédiaires.",
+    "ctaSearch": "Rechercher des guides",
+    "ctaImGuide": "Je suis un guide",
+    "stats": { "active": "Guides actifs", "regions": "Régions", "support": "Support" }
+  },
+  "guide": {
+    "filters": { "search": "Rechercher par ville ou guide…", "allLanguages": "Toutes les langues" },
+    "results": "{n} résultats",
+    "years": "0 an | 1 an | {n} ans"
+  },
+  "auth": { "email": "E-mail", "password": "Mot de passe", "signIn": "Se connecter", "signUp": "Créer un compte" },
+  "common": { "site": "Site", "legal": "Mentions légales", "terms": "Conditions d'utilisation", "privacy": "Confidentialité", "filters": "Filtres" },
+  "footer": { "brand": "Connecte les touristes avec des guides certifiés dans tout le Pérou.", "copyright": "© 2025 GuíaTurística." }
+}

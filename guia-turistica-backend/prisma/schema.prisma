@@ -1,0 +1,162 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  // shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  GUIDE
+  TOURIST
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+enum LanguageLevel {
+  BASIC
+  CONVERSATIONAL
+  FLUENT
+  NATIVE
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  phone        String?
+  locale       String?
+  role         UserRole @default(TOURIST)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  guideProfile      GuideProfile?
+  bookingsAsTourist Booking[]     @relation("TouristBookings")
+  bookingsAsGuide   Booking[]     @relation("GuideBookings")
+
+  reviewsWritten  Review[] @relation("ReviewsWrittenBy")
+  reviewsReceived Review[] @relation("ReviewsForGuide")
+}
+
+model GuideProfile {
+  userId String @id
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  displayName String?
+  bio         String?
+  ratePerDay  Int?
+  currency    String  @default("PEN")
+  verified    Boolean @default(false)
+  ratingAvg   Float   @default(0)
+  ratingCount Int     @default(0)
+
+  cityId Int?
+  city   City? @relation(fields: [cityId], references: [id])
+
+  languages   GuideLanguage[]
+  specialties GuideSpecialty[]
+
+  @@index([cityId])
+}
+
+model Region {
+  id   Int    @id @default(autoincrement())
+  name String
+  slug String @unique
+  cities City[]
+}
+
+model City {
+  id       Int    @id @default(autoincrement())
+  name     String
+  slug     String @unique
+  regionId Int
+  region   Region @relation(fields: [regionId], references: [id])
+  guides   GuideProfile[]
+
+  @@index([regionId])
+}
+
+model Language {
+  code   String          @id
+  name   String
+  guides GuideLanguage[]
+}
+
+model GuideLanguage {
+  guideId      String
+  languageCode String
+  level        LanguageLevel
+
+  guide    GuideProfile @relation(fields: [guideId], references: [userId], onDelete: Cascade)
+  language Language     @relation(fields: [languageCode], references: [code])
+
+  @@id([guideId, languageCode])
+  @@index([languageCode])
+}
+
+model Specialty {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+  slug String @unique
+  guides GuideSpecialty[]
+}
+
+model GuideSpecialty {
+  guideId     String
+  specialtyId Int
+
+  guide     GuideProfile @relation(fields: [guideId], references: [userId], onDelete: Cascade)
+  specialty Specialty    @relation(fields: [specialtyId], references: [id])
+
+  @@id([guideId, specialtyId])
+  @@index([specialtyId])
+}
+
+model Booking {
+  id          String        @id @default(cuid())
+  touristId   String
+  guideId     String
+  startDate   DateTime
+  endDate     DateTime
+  pricePerDay Int
+  currency    String        @default("PEN")
+  status      BookingStatus @default(PENDING)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  tourist User @relation("TouristBookings", fields: [touristId], references: [id], onDelete: Cascade)
+  guide   User @relation("GuideBookings",   fields: [guideId],   references: [id], onDelete: Cascade)
+
+  review Review? @relation("BookingReview")
+
+  @@index([touristId])
+  @@index([guideId])
+  @@index([status])
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  bookingId String?  @unique
+  touristId String
+  guideId   String
+  rating    Int
+  comment   String?
+  createdAt DateTime @default(now())
+
+  booking Booking? @relation("BookingReview", fields: [bookingId], references: [id], onDelete: SetNull)
+  tourist User     @relation("ReviewsWrittenBy", fields: [touristId], references: [id], onDelete: Cascade)
+  guide   User     @relation("ReviewsForGuide",  fields: [guideId],   references: [id], onDelete: Cascade)
+
+  @@index([guideId])
+  @@index([touristId])
+}
